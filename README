@@ -1,0 +1,4 @@
+This small library loads plain old ".properties" files into static or instance
+variables.
+
+See src/de/autoconfig/test/ for tests and examples.
