@@ -1,9 +1,10 @@
-package de.autoconfig.source;
+package de.autoconfig.loader;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import de.autoconfig.exception.AutoConfigMissingEntryException;
+import de.autoconfig.source.IAutoConfigSource;
 
 public final class ResourceBundleSourceLoader implements IAutoConfigSourceLoader
 {

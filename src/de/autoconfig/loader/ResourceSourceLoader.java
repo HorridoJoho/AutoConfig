@@ -1,10 +1,11 @@
-package de.autoconfig.source;
+package de.autoconfig.loader;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 import de.autoconfig.exception.AutoConfigMissingEntryException;
+import de.autoconfig.source.IAutoConfigSource;
 
 public final class ResourceSourceLoader implements IAutoConfigSourceLoader
 {

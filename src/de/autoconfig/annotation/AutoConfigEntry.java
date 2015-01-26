@@ -7,7 +7,6 @@ import java.lang.annotation.Target;
 
 import de.autoconfig.parser.IAutoConfigParser;
 import de.autoconfig.parser.NullParser;
-import de.autoconfig.source.IAutoConfigSourceLoader;
 import de.autoconfig.validator.IAutoConfigValidator;
 import de.autoconfig.validator.NullValidator;
 
@@ -15,11 +14,9 @@ import de.autoconfig.validator.NullValidator;
 @Target(ElementType.FIELD)
 public @interface AutoConfigEntry
 {
-	Class<? extends IAutoConfigSourceLoader> loader();
-	String source();
-	String ident() default "";
-	boolean hasDefValue() default false;
-	String defValue() default "";
+	String id() default "";
+	boolean hasDef() default false;
+	String def() default "";
 	Class<? extends IAutoConfigParser<?>> parser() default NullParser.class;
 	Class<? extends IAutoConfigValidator<?>> validator() default NullValidator.class;
 }
