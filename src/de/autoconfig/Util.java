@@ -19,6 +19,9 @@ package de.autoconfig;
 
 import java.util.Objects;
 
+/**
+ * @author HorridoJoho
+ */
 public final class Util
 {
 	public static void requireNonEmptyString(String str, String msg)

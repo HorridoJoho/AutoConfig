@@ -17,15 +17,20 @@
  */
 package de.autoconfig;
 
+/**
+ * @author HorridoJoho
+ */
 final class StackCountInfo
 {
-	public final int sourceLoaderCount;
-	public final int prefixCount;
-	public final int postfixCount;
+	final int sourceLoaderCount;
+	final int sourceCount;
+	final int prefixCount;
+	final int postfixCount;
 	
-	StackCountInfo(int sourceLoaderCount, int prefixCount, int postfixCount)
+	StackCountInfo(int sourceLoaderCount, int sourceCount, int prefixCount, int postfixCount)
 	{
 		this.sourceLoaderCount = sourceLoaderCount;
+		this.sourceCount = sourceCount;
 		this.prefixCount = prefixCount;
 		this.postfixCount = postfixCount;
 	}

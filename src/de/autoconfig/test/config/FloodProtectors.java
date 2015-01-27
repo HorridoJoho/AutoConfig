@@ -18,13 +18,13 @@
 package de.autoconfig.test.config;
 
 import de.autoconfig.annotation.AutoConfigEntry;
-import de.autoconfig.annotation.AutoConfigLoader;
 import de.autoconfig.annotation.AutoConfigObject;
 import de.autoconfig.annotation.AutoConfigPrefix;
-import de.autoconfig.loader.ResourceSourceLoader;
 import de.autoconfig.test.PunishmentType;
 
-@AutoConfigLoader(loader=ResourceSourceLoader.class, src="resource/config/FloodProtector.properties")
+/**
+ * @author HorridoJoho
+ */
 public final class FloodProtectors
 {
 	public static final class FloodProtector

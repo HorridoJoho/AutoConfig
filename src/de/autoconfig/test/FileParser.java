@@ -21,6 +21,9 @@ import java.io.File;
 
 import de.autoconfig.parser.IAutoConfigParser;
 
+/**
+ * @author HorridoJoho
+ */
 public final class FileParser implements IAutoConfigParser<File>
 {
 	@Override

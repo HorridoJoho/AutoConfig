@@ -17,6 +17,9 @@
  */
 package de.autoconfig.parser;
 
+/**
+ * @author HorridoJoho
+ */
 public interface IAutoConfigParser<T>
 {
 	T parse(String valueString);

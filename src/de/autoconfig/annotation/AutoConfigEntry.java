@@ -27,6 +27,9 @@ import de.autoconfig.parser.NullParser;
 import de.autoconfig.validator.IAutoConfigValidator;
 import de.autoconfig.validator.NullValidator;
 
+/**
+ * @author HorridoJoho
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface AutoConfigEntry

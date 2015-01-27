@@ -23,6 +23,9 @@ import java.util.ResourceBundle;
 import de.autoconfig.exception.AutoConfigMissingEntryException;
 import de.autoconfig.source.IAutoConfigSource;
 
+/**
+ * @author HorridoJoho
+ */
 public final class ResourceBundleSourceLoader implements IAutoConfigSourceLoader
 {
 	private final class ResourceBundleSource implements IAutoConfigSource

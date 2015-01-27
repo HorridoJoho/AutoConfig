@@ -24,6 +24,9 @@ import java.util.Properties;
 import de.autoconfig.exception.AutoConfigMissingEntryException;
 import de.autoconfig.source.IAutoConfigSource;
 
+/**
+ * @author HorridoJoho
+ */
 public final class ResourceSourceLoader implements IAutoConfigSourceLoader
 {
 	private final class ResourceSource extends Properties implements IAutoConfigSource

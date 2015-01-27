@@ -17,6 +17,9 @@
  */
 package de.autoconfig.exception;
 
+/**
+ * @author HorridoJoho
+ */
 public final class AutoConfigMissingEntryException extends Exception
 {
 	private static final long serialVersionUID = -3437600092892551691L;

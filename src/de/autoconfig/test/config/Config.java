@@ -17,13 +17,22 @@
  */
 package de.autoconfig.test.config;
 
+import de.autoconfig.annotation.AutoConfigLoader;
 import de.autoconfig.annotation.AutoConfigObject;
+import de.autoconfig.annotation.AutoConfigSource;
+import de.autoconfig.loader.ResourceSourceLoader;
 
+/**
+ * @author HorridoJoho
+ */
+@AutoConfigLoader(ResourceSourceLoader.class)
 public final class Config
 {
 	@AutoConfigObject
+	@AutoConfigSource("resource/config/Server.properties")
 	public static Server Server;
 
 	@AutoConfigObject
+	@AutoConfigSource("resource/config/FloodProtector.properties")
 	public static FloodProtectors FloodProtector;
 }

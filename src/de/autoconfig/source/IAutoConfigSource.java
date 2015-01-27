@@ -19,6 +19,9 @@ package de.autoconfig.source;
 
 import de.autoconfig.exception.AutoConfigMissingEntryException;
 
+/**
+ * @author HorridoJoho
+ */
 public interface IAutoConfigSource
 {
 	String getValue(String key) throws AutoConfigMissingEntryException;

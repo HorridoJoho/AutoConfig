@@ -17,6 +17,9 @@
  */
 package de.autoconfig.exception;
 
+/**
+ * @author HorridoJoho
+ */
 public final class AutoConfigValidationException extends Exception
 {
 	private static final long serialVersionUID = -1287762397986293230L;

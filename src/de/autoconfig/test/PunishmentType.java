@@ -17,6 +17,9 @@
  */
 package de.autoconfig.test;
 
+/**
+ * @author HorridoJoho
+ */
 public enum PunishmentType
 {
 	none,

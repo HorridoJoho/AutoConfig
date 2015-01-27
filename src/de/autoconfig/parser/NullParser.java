@@ -17,6 +17,9 @@
  */
 package de.autoconfig.parser;
 
+/**
+ * @author HorridoJoho
+ */
 public final class NullParser implements IAutoConfigParser<Void>
 {
 	@Override

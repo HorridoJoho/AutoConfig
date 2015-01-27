@@ -30,9 +30,13 @@ import de.autoconfig.annotation.AutoConfigSource;
 import de.autoconfig.loader.IAutoConfigSourceLoader;
 import de.autoconfig.source.IAutoConfigSource;
 
+/**
+ * @author HorridoJoho
+ */
 final class Context
 {
-	private LinkedList<SourceLoaderStackPair> _sourceLoaderStack;
+	private LinkedList<Class<? extends IAutoConfigSourceLoader>> _sourceLoaderStac;
+	private LinkedList<String> _sourceStack;
 	private LinkedList<String> _prefixStack;
 	private LinkedList<String> _postfixStack;
 	private LinkedList<StackCountInfo> _stackCountInfos;
@@ -41,7 +45,8 @@ final class Context
 	
 	Context()
 	{
-		_sourceLoaderStack = new LinkedList<>();
+		_sourceLoaderStac = new LinkedList<>();
+		_sourceStack = new LinkedList<>();
 		_prefixStack = new LinkedList<>();
 		_postfixStack = new LinkedList<>();
 		_stackCountInfos = new LinkedList<>();
@@ -51,9 +56,17 @@ final class Context
 	
 	private void requireNonEmptySourceLoaderStack()
 	{
-		if (_sourceLoaderStack.isEmpty())
+		if (_sourceLoaderStac.isEmpty())
 		{
-			throw new IllegalStateException("empty loader stack");
+			throw new IllegalStateException("empty source loader stack");
+		}
+	}
+
+	private void requireNonEmptySourceStack()
+	{
+		if (_sourceStack.isEmpty())
+		{
+			throw new IllegalStateException("empty source stack");
 		}
 	}
 	
@@ -73,15 +86,17 @@ final class Context
 	private IAutoConfigSource getSource() throws Exception
 	{
 		requireNonEmptySourceLoaderStack();
+		requireNonEmptySourceStack();
 
-		SourceLoaderStackPair pair = _sourceLoaderStack.getLast();
-		String sourceInstanceKey = pair.sourceLoaderType.getName() + pair.sourceString;
+		Class<? extends IAutoConfigSourceLoader> sourceLoaderType = _sourceLoaderStac.getLast();
+		String sourceString = _sourceStack.getLast();
+		String sourceInstanceKey = sourceLoaderType.getName() + sourceString;
 
 		IAutoConfigSource source = _sourceInstances.get(sourceInstanceKey);
 		if (source == null)
 		{
-			IAutoConfigSourceLoader sourceLoader = getSourceLoader(pair.sourceLoaderType);
-			source = sourceLoader.load(pair.sourceString);
+			IAutoConfigSourceLoader sourceLoader = getSourceLoader(sourceLoaderType);
+			source = sourceLoader.load(sourceString);
 			_sourceInstances.put(sourceInstanceKey, source);
 		}
 
@@ -91,6 +106,7 @@ final class Context
 	void processAnnotations(Annotation[] annotations)
 	{
 		int sourceLoaderCount = 0;
+		int sourceCount = 0;
 		int prefixCount = 0;
 		int postfixCount = 0;
 
@@ -101,14 +117,14 @@ final class Context
 				if (annotation instanceof AutoConfigLoader)
 				{
 					AutoConfigLoader annotation2 = (AutoConfigLoader)annotation;
-					pushSourceLoaderStack(annotation2.loader(), annotation2.src());
+					pushSourceLoaderStack(annotation2.value());
 					++ sourceLoaderCount;
 				}
 				else if (annotation instanceof AutoConfigSource)
 				{
 					AutoConfigSource annotation2 = (AutoConfigSource)annotation;
-					pushSourceLoaderStack(annotation2.value());
-					++ sourceLoaderCount;
+					pushSourceStack(annotation2.value());
+					++ sourceCount;
 				}
 				else if (annotation instanceof AutoConfigPrefix)
 				{
@@ -126,7 +142,7 @@ final class Context
 		}
 		finally
 		{
-			_stackCountInfos.addLast(new StackCountInfo(sourceLoaderCount, prefixCount, postfixCount));
+			_stackCountInfos.addLast(new StackCountInfo(sourceLoaderCount, sourceCount, prefixCount, postfixCount));
 		}
 	}
 	
@@ -143,6 +159,10 @@ final class Context
 		{ 
 			popSourceLoaderStack();
 		}
+		for (i = 0;i < info.sourceCount;++ i)
+		{ 
+			popSourceStack();
+		}
 		for (i = 0;i < info.prefixCount;++ i)
 		{
 			popPrefixStack();
@@ -153,24 +173,28 @@ final class Context
 		}
 	}
 
-	private void pushSourceLoaderStack(Class<? extends IAutoConfigSourceLoader> sourceLoaderType, String sourceString)
+	private void pushSourceLoaderStack(Class<? extends IAutoConfigSourceLoader> sourceLoaderType)
 	{
 		Objects.requireNonNull(sourceLoaderType);
-		Util.requireNonEmptyString(sourceString, "empty source string");
-		_sourceLoaderStack.addLast(new SourceLoaderStackPair(sourceLoaderType, sourceString));
-	}
-	
-	private void pushSourceLoaderStack(String sourceString)
-	{
-		Util.requireNonEmptyString(sourceString, "empty source string");
-		requireNonEmptySourceLoaderStack();
-		_sourceLoaderStack.addLast(new SourceLoaderStackPair(_sourceLoaderStack.getLast().sourceLoaderType, sourceString));
+		_sourceLoaderStac.addLast(sourceLoaderType);
 	}
 	
 	private void popSourceLoaderStack()
 	{
 		requireNonEmptySourceLoaderStack();
-		_sourceLoaderStack.removeLast();
+		_sourceLoaderStac.removeLast();
+	}
+
+	private void pushSourceStack(String sourceString)
+	{
+		Util.requireNonEmptyString(sourceString, "empty source string");
+		_sourceStack.addLast(sourceString);
+	}
+
+	private void popSourceStack()
+	{
+		requireNonEmptySourceLoaderStack();
+		_sourceStack.removeLast();
 	}
 	
 	private void pushPrefixStack(String prefix)

@@ -22,6 +22,9 @@ import java.io.File;
 import de.autoconfig.exception.AutoConfigValidationException;
 import de.autoconfig.validator.IAutoConfigValidator;
 
+/**
+ * @author HorridoJoho
+ */
 public final class FileExistenceValidator implements IAutoConfigValidator<File>
 {
 	@Override
